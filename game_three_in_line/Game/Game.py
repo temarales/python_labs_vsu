@@ -13,9 +13,6 @@ class Game(object):
     def change_positions(self, row1, column1, row2, column2):
         self.field.change_positions(row1, column1, row2, column2)
 
-    #def check_after_changing_positions(self, row1, column1, row2, column2):
-     #   self.field.clear_field()
-
 
 
 

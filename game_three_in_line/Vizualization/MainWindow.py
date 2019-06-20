@@ -5,6 +5,7 @@ from Game.Game import *
 from Game.Color import *
 from Vizualization.SettingsWindow import *
 from Vizualization.RulesWindow import *
+from Game.Point import *
 
 from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5 import QtSvg
@@ -18,8 +19,9 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self._game = Game(4, 10)
-        self.old_x = -1
-        self.old_y = -1
+        #self.old_x = -1
+        #self.old_y = -1
+        self.old_point = Point(-1,-1)
         self.settings_window = None
         self.rules_window = None
         self.color_count = None
@@ -67,15 +69,13 @@ class MainWindow(QMainWindow):
         self.start_new_game(self.color_count, 10)
 
     def row_column_clicked(self):
-        row = self._table.currentRow()
-        col = self._table.currentColumn()
-        if self.old_x == -1 and self.old_y == -1:
-            self.old_x = col
-            self.old_y = row
+        new_point = Point(self._table.currentRow(), self._table.currentColumn())
+        if self.old_point.getX == -1:
+            self.old_point = new_point
         else:
-            self._game.change_positions(row, col, self.old_y, self.old_x)
-            self.old_x = -1
-            self.old_y = -1
+            self._game.change_positions(new_point.getX, new_point.getY, self.old_point.getX, self.old_point.getY)
+            self.old_point.setX(-1)
+            self.old_point.setY(-1)
             self.refresh_table()
             self.clear_table()
             self.refresh_table()
